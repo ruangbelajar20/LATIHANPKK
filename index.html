@@ -42,6 +42,11 @@
         
         #start-screen, #result-screen { text-align: center; }
         .score-display { font-size: 4rem; color: var(--primary); font-weight: bold; margin: 1rem 0; }
+
+        /* Timer Style */
+        #timer-display { font-weight: bold; background: rgba(0,0,0,0.2); padding: 5px 15px; border-radius: 20px; font-family: monospace; font-size: 1.1rem; }
+        .timer-warning { background: var(--danger) !important; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0.5; } }
     </style>
 </head>
 <body>
@@ -50,13 +55,13 @@
 
     <header>
         <div><strong>CBT Profesional</strong> | Simulasi PAT PKK</div>
-        <div id="timer-display">Status: Mengawasi Ujian</div>
+        <div id="timer-display">Waktu: 25:00</div>
     </header>
 
     <main>
         <div class="card" id="start-screen">
             <h2>Ujian Praktik & Teori Kejuruan</h2>
-            <p style="color: #6b7280; margin-bottom: 1.5rem;">Mata Pelajaran: Produk Kreatif dan Kewirausahaan (PKK)</p>
+            <p style="color: #6b7280; margin-bottom: 1.5rem;">Mata Pelajaran: Produk Kreatif dan Kewirausahaan (PKK)<br>Waktu Pengerjaan: <strong>25 Menit</strong></p>
             
             <div style="background: #f9fafb; padding: 1.5rem; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 1.5rem;">
                 <h4 style="margin-top: 0; text-align: left; color: var(--text);">Isi Identitas Peserta:</h4>
@@ -77,6 +82,7 @@
                     <li>Sistem mendeteksi jika membuka tab baru, mengecilkan browser, atau membuka aplikasi eksternal (floating apps).</li>
                     <li>Batas toleransi ketidaksengajaan adalah 3 kali pelanggaran. Jika dilewati, ujian otomatis selesai paksa.</li>
                     <li>Fitur klik kanan, salin soal (copy-paste), dan inspect element telah dinonaktifkan.</li>
+                    <li>Ujian akan dikumpulkan otomatis jika waktu 25 menit habis.</li>
                 </ul>
             </div>
             <button class="btn" onclick="startExam()">Masuk Mode Ujian</button>
@@ -123,252 +129,4 @@
         const questions = [
             { q: "1. Pada dunia industri, untuk menjamin kualitas layanan yang selalu sama dan terstandar, mekanik diwajibkan bekerja mengikuti panduan tertulis yang disebut...", options: ["A. Jurnal perakitan", "B. Standard Operating Procedure (SOP)", "C. Kartu garansi servis", "D. Daftar absensi", "E. Nota tagihan"], ans: 1 },
             { q: "2. Waktu tunggu yang dirasakan oleh pelanggan sejak motor didaftarkan hingga selesai dikerjakan di bengkel disebut dengan istilah...", options: ["A. Takt Time", "B. Overtime", "C. Lead Time", "D. Downtime", "E. Rest Time"], ans: 2 },
-            { q: "3. Tindakan menyortir alat kerja dan membuang alat-alat yang sudah rusak dari meja mekanik adalah bentuk penerapan budaya 5S pabrik pada tahap...", options: ["A. Seiri (Ringkas)", "B. Seiton (Rapi)", "C. Seiso (Resik)", "D. Seiketsu (Rawat)", "E. Shitsuke (Rajin)"], ans: 0 },
-            { q: "4. Pakaian kerja standar satu setelan yang wajib digunakan oleh mekanik untuk alasan keamanan dan mobilitas gerak disebut...", options: ["A. Jas laboratorium", "B. Wearpack", "C. Kemeja rapi", "D. Celemek mekanik", "E. Kaos oblong"], ans: 1 },
-            { q: "5. Pelanggan harus menunggu 3 hari karena bengkel kehabisan stok kampas rem. Dalam manajemen industri jasa, hal ini termasuk pemborosan (waste) kategori...", options: ["A. Defect", "B. Overproduction", "C. Motion", "D. Waiting", "E. Excess Processing"], ans: 3 },
-            { q: "6. Tahap pengecekan terakhir (seperti cek lampu, klakson, dan fungsi rem) sebelum kunci motor diserahkan kembali kepada konsumen dikenal sebagai area...", options: ["A. Front Desk", "B. Pit Service", "C. Final Inspection / Quality Control", "D. Waiting Room", "E. Gudang Sparepart"], ans: 2 },
-            { q: "7. Untuk mengukur kerenggangan atau celah klep sepeda motor dengan tingkat kepresisian tinggi, alat ukur yang wajib disiapkan adalah...", options: ["A. Jangka sorong", "B. Micrometer", "C. Kunci momen", "D. Feeler Gauge", "E. Multitester"], ans: 3 },
-            { q: "8. Untuk memudahkan pergerakan mekanik membawa kunci-kunci berat ke samping motor yang sedang dikerjakan, alat bantu yang sangat efisien adalah...", options: ["A. Tas selempang", "B. Tool trolley (Troli alat beroda)", "C. Kardus bekas", "D. Nampan plastik", "E. Etalase kaca"], ans: 1 },
-            { q: "9. Buku referensi utama yang diterbitkan oleh pabrikan motor dan berisi batas-batas keausan setiap komponen untuk panduan servis adalah...", options: ["A. Buku tamu", "B. Buku garansi", "C. Katalog produk", "D. Service Record", "E. Manual Book (Buku Pedoman Reparasi)"], ans: 4 },
-            { q: "10. Bolak-balik berjalan sejauh 10 meter hanya untuk meminjam kunci busi ke meja mekanik lain adalah contoh nyata dari pemborosan...", options: ["A. Bahan baku", "B. Modal uang", "C. Gerakan mekanik (Motion waste)", "D. Persediaan barang", "E. Tenaga kerja luar"], ans: 2 },
-            { q: "11. Tata letak penempatan meja servis yang paling ideal untuk keamanan adalah area yang terpisah dari ruang tunggu konsumen. Area khusus mekanik ini sering disebut...", options: ["A. Area Pit Servis", "B. Lounge", "C. Area Pendaftaran", "D. Area Cuci Motor", "E. Ruang Kasir"], ans: 0 },
-            { q: "12. Mengapa alat-alat khusus presisi seperti Micrometer dan Feeler Gauge harus dijaga kebersihannya dan disimpan di kotak khususnya?", options: ["A. Agar terlihat mahal saat pelanggan melihatnya", "B. Supaya tidak mudah dicuri", "C. Agar kepresisian alat tidak berkurang akibat benturan dan karat", "D. Karena alat tersebut jarang digunakan", "E. Agar alat terlihat selalu baru untuk dijual kembali"], ans: 2 },
-            { q: "13. Mengapa penerapan budaya kebersihan bengkel yang sangat ketat (seperti Seiso atau Resik) secara langsung berdampak pada penjualan jasa?", options: ["A. Karena bengkel yang bersih bisa menghemat listrik", "B. Konsumen cenderung lebih mempercayakan motornya pada bengkel yang terlihat bersih dan profesional", "C. Agar mekanik tidak gampang sakit", "D. Untuk mengurangi pembelian sabun cuci", "E. Karena diwajibkan oleh dinas kebersihan"], ans: 1 },
-            { q: "14. Apa alasan logis meja kasir dan pendaftaran tidak boleh diletakkan tepat di tengah area mekanik yang sedang bekerja (Pit area)?", options: ["A. Agar kasir tidak perlu membersihkan oli", "B. Supaya konsumen bisa bebas mengambil alat", "C. Sangat berbahaya bagi pelanggan dan menghambat ruang gerak mekanik", "D. Agar uang di laci kasir tidak hilang", "E. Mempercepat proses pengerjaan motor"], ans: 2 },
-            { q: "15. SOP bongkar mesin skala berat (overhaul) selalu menyarankan agar sepeda motor dicuci terlebih dahulu sebelum dibongkar. Apa tujuan utamanya?", options: ["A. Agar lumpur dan pasir tidak masuk mengotori ruang mesin yang sedang dibongkar", "B. Supaya pelanggan senang motornya bersih gratis", "C. Untuk mendinginkan knalpot yang panas", "D. Agar tagihan biaya servis bisa dinaikkan", "E. Memperlambat waktu kerja agar mekanik tidak lelah"], ans: 0 },
-            { q: "16. Risiko langsung yang terjadi apabila mekanik menyetel celah klep hanya menggunakan 'perasaan' (tanpa alat Feeler gauge) adalah...", options: ["A. Baut klep akan patah di dalam", "B. Bensin menjadi jauh lebih irit", "C. Mesin cepat panas, tenaga loyo, atau timbul suara ngelitik akibat setelan tidak presisi", "D. Suara knalpot menjadi lebih halus", "E. Oli mesin akan tumpah"], ans: 2 },
-            { q: "17. Banyak bengkel memisahkan jalur antrean antara servis ganti oli cepat dan servis berat (turun mesin). Manfaat utama manajemen alur ini adalah...", options: ["A. Mengurangi upah mekanik", "B. Sirkulasi motor layanan ringan tidak ikut terhambat oleh motor yang pengerjaannya berhari-hari", "C. Menghabiskan ruang kosong di bengkel", "D. Supaya bengkel selalu terlihat penuh", "E. Membuat konsumen servis berat menjadi tidak sabar"], ans: 1 },
-            { q: "18. Manfaat utama melaksanakan briefing pagi (morning meeting) antara kepala mekanik dan karyawan sebelum bengkel dibuka adalah...", options: ["A. Untuk absen kehadiran saja", "B. Menyamakan target penyelesaian kerja hari itu dan mengingatkan SOP keselamatan", "C. Membagi uang harian", "D. Menghukum karyawan yang datang terlambat", "E. Menghabiskan waktu tunggu konsumen"], ans: 1 },
-            { q: "19. Impact wrench tenaga angin atau listrik sangat dilarang digunakan untuk memasang baut bodi berbahan plastik. Hal ini dikarenakan...", options: ["A. Menguras daya listrik kompresor", "B. Alat menjadi cepat kotor oleh debu plastik", "C. Waktu pemasangan menjadi terlalu lama", "D. Sulit menjangkau area bodi yang sempit", "E. Torsi (putaran) terlalu kuat yang bisa membuat bodi plastik langsung pecah atau retak"], ans: 4 },
-            { q: "20. Jika seorang mekanik membiarkan lantai kerjanya penuh dengan ceceran cairan pembersih dan sisa oli, dampak terbesar terhadap efisiensi kerja adalah...", options: ["A. Komponen motor menjadi lebih bersih", "B. Waktu pengerjaan bertambah cepat karena lantai licin", "C. Menurunkan efisiensi langkah karena mekanik berjalan lambat agar tidak terpeleset", "D. Memudahkan pemindahan alat-alat berat", "E. Pelanggan semakin nyaman melihat mekanik bekerja keras"], ans: 2 },
-            { q: "21. Dalam SOP perakitan, pemasangan baut pada area luas seperti blok crankcase atau silinder kepala harus dilakukan dengan metode menyilang (cross). Mengapa?", options: ["A. Agar tekanan rapat merata dan mencegah blok mesin melengkung atau bocor kompresi", "B. Supaya kunci momen bisa berbunyi lebih keras", "C. Karena metode ini diajarkan turun-temurun", "D. Agar terlihat lebih profesional di mata pelanggan", "E. Mempercepat proses perakitan baut"], ans: 0 },
-            { q: "22. Manfaat pemberian nama/label pada setiap laci peralatan (budaya Seiton) adalah...", options: ["A. Membuat lemari alat tampak menarik difoto", "B. Agar alat tidak mudah berkarat", "C. Mempercepat mekanik mencari saat butuh dan mengembalikan alat pada tempat yang benar", "D. Melatih mekanik membaca tulisan", "E. Sebagai hiasan dinding bengkel"], ans: 2 },
-            { q: "23. Jika konsumen mengeluhkan lampu Check Engine (MIL) menyala pada motor injeksinya, alat pertama yang harus kalian persiapkan di tool tray adalah...", options: ["A. Impact Wrench", "B. Diagnostic Tool (Scanner Injeksi) dan Multitester", "C. Compressor udara", "D. Jangka sorong dan kunci Inggris", "E. Feeler Gauge dan obeng ketok"], ans: 1 },
-            { q: "24. Seorang pelanggan terburu-buru meminta ganti ban dalam. Agar bibir velg motor konsumen tidak lecet dan prosesnya cepat, tindakan mekanik yang efisien adalah...", options: ["A. Mencongkel paksa menggunakan tiga obeng min pipih sekaligus", "B. Mengoleskan oli mesin bekas sebanyak-banyaknya di area velg", "C. Memukul ban menggunakan palu besi", "D. Menggunakan Tire Changer Machine (Mesin buka ban otomatis)", "E. Menggunakan obeng ketok ukuran besar"], ans: 3 },
-            { q: "25. Di bengkel sedang ada dua mekanik bertugas. Mekanik A kewalahan memasang komponen CVT yang sangat banyak, sementara Mekanik B sedang diam menunggu oli mesin pelanggannya tuntas menetes. Tindakan kolaborasi yang paling efisien adalah...", options: ["A. Mekanik B menyuruh pelanggannya pulang karena lama", "B. Mekanik A mengerjakan dengan terburu-buru", "C. Mekanik B membantu membersihkan area filter udara atau merakit sebagian part CVT Mekanik A sambil menunggu", "D. Mekanik B mematikan lampu bengkel", "E. Keduanya berhenti bekerja untuk istirahat"], ans: 2 },
-            { q: "26. Kalian sedang menata tool kit. Di dalam kotak alat ditemukan obeng min yang gagangnya pecah dan ujungnya tumpul akibat sering dijadikan alat congkel liar. Tindakan efisiensi yang tepat sesuai budaya industri adalah...", options: ["A. Menyimpannya di tempat paling bawah agar tidak terlihat", "B. Membuangnya ke kotak alat afkir/rusak agar tidak tidak sengaja terpakai dan membahayakan tangan mekanik", "C. Memakainya untuk memukul paku", "D. Diberikan secara gratis kepada pelanggan", "E. Memasukkannya kembali ke laci penyimpanan utama"], ans: 1 },
-            { q: "27. Konsumen sering komplain penyakit motornya 'kambuh' lagi setelah diservis di bengkel kalian. Padahal, mekanik kalian bekerja sangat cepat merakit motor. Setelah dianalisis, ternyata masalah utama ada pada meja depan (Front Desk). Masalah hambatan (bottleneck) apa yang paling mungkin terjadi?", options: ["A. Kasir menghitung uang terlalu lama", "B. Harga servis terlalu mahal dibanding bengkel lain", "C. Bagian pendaftaran tidak mencatat keluhan spesifik dari konsumen secara detail untuk diteruskan ke mekanik", "D. Meja front desk kurang menarik secara estetik", "E. Kertas nota terlalu tipis"], ans: 2 },
-            { q: "28. Dua orang mekanik berlomba. Mekanik 1 meletakkan baut secara berurutan pada nampan bermagnet, sementara Mekanik 2 meletakkan baut secara acak di lantai. Analisis keunggulan Mekanik 1 adalah...", options: ["A. Saat merakit, Mekanik 1 jauh lebih cepat karena tahu persis urutan baut dan nol risiko baut hilang/terselip", "B. Mekanik 1 lebih lambat karena harus menata baut satu per satu", "C. Baut Mekanik 1 akan cepat rusak akibat magnet", "D. Konsumen lebih suka metode Mekanik 2 yang terlihat sibuk", "E. Mekanik 1 menghabiskan anggaran bengkel untuk beli nampan"], ans: 0 },
-            { q: "29. Sebuah bengkel mendesain ruang kerjanya dengan rak sparepart berada di lantai 2, sementara Pit servis ada di lantai 1. Jika dianalisis dari prinsip manajemen operasional, kelemahan tata letak ini adalah...", options: ["A. Biaya pembangunan ruko yang terlalu mahal", "B. Mekanik tidak bisa mengawasi motor dari lantai atas", "C. Terjadi pemborosan waktu jalan (motion waste) karena mekanik harus mondar-mandir naik tangga saat butuh onderdil", "D. Pencahayaan di lantai 1 menjadi gelap", "E. Rak sparepart akan cepat keropos"], ans: 2 },
-            { q: "30. Bengkel sangat ramai pelanggan, namun pada akhir bulan pendapatan servis sangat kecil. Setelah diaudit, banyak mekanik yang memakai O-Ring atau baut bekas dari motor pelanggan lain tanpa input suku cadang baru demi mengejar waktu cepat. Analisis kerugian jangka panjangnya adalah...", options: ["A. Bengkel sangat menghemat biaya operasional", "B. Mekanik bertambah terampil mendaur ulang barang", "C. Bengkel mendapat penghargaan ramah lingkungan", "D. SOP prosedur keamanan dilanggar secara fatal yang berujung kebocoran mesin massal dan matinya reputasi bisnis", "E. Konsumen senang karena harga servis sangat murah"], ans: 3 },
-            { q: "31. Alat diagnostik digital injeksi, dongkrak hidrolik/lift motor, dan mesin press pelek dalam konsep usaha bengkel termasuk ke dalam sumber daya...", options: ["A. Money", "B. Man", "C. Machine", "D. Material", "E. Method"], ans: 2 },
-            { q: "32. Pengelolaan uang tunai, alokasi dana darurat bengkel, dan pembagian keuntungan bulanan termasuk dalam manajemen sumber daya...", options: ["A. Money", "B. Machine", "C. Material", "D. Method", "E. Man"], ans: 0 },
-            { q: "33. Barang cair seperti brake fluid (minyak rem), part cleaner, pelumas rantai, serta kain majun merupakan elemen dari sumber daya...", options: ["A. Money", "B. Material", "C. Method", "D. Man", "E. Machine"], ans: 1 },
-            { q: "34. Dokumen panduan mengenai urutan penyetelan injeksi dan durasi standar pengerjaannya adalah elemen dari sumber daya...", options: ["A. Money", "B. Material", "C. Machine", "D. Man", "E. Method"], ans: 4 },
-            { q: "35. Hubungan kolaborasi yang efisien antara elemen SDM (Man) dan Persediaan (Material) di bengkel dapat terlihat ketika...", options: ["A. Mekanik memakai cairan pembersih sebanyak-banyaknya agar terlihat bersih", "B. Mekanik diam-diam membuang oli pelumas yang masih bagus", "C. Mekanik menggunakan bahan habis pakai (seperti grease atau cairan cleaner) sesuai takaran standar tanpa pemborosan", "D. Mekanik menyuruh konsumen membeli barang di bengkel luar", "E. Kasir menahan stok barang masuk di gudang"], ans: 2 },
-            { q: "36. Validasi dan pencatatan buku kasir (Money) wajib dilakukan dan dicocokkan dengan fisik barang terjual setiap sore saat tutup bengkel. Hal ini bertujuan untuk...", options: ["A. Mengisi waktu luang kasir", "B. Mencegah kebocoran anggaran dan mengetahui perputaran untung rugi harian bengkel", "C. Mengurangi gaji mekanik secara otomatis", "D. Penaikkan harga jual esok hari", "E. Memancing investor luar negeri masuk"], ans: 1 },
-            { q: "37. Sebuah bengkel memiliki SOP (Method) yang sangat baik, namun karyawan (Man) sering mengabaikannya karena kurang pengawasan. Dampak logis yang timbul pada bisnis jasa adalah...", options: ["A. Kecepatan pelayanan selalu meningkat tajam", "B. Penggunaan alat menjadi lebih awet", "C. Biaya listrik mengalami penurunan drastis", "D. Kualitas hasil servis tidak konsisten dan sangat bergantung pada mood karyawan hari itu", "E. Pelanggan merasa lebih dilayani secara personal"], ans: 3 },
-            { q: "38. Mesin Compressor angin (Machine) harus dibuka katup pembuangan air di dasar tangkinya minimal seminggu sekali. Perawatan sumber daya alat ini ditujukan untuk...", options: ["A. Meringankan beban putaran mesin", "B. Menambah tekanan udara dari mesin menjadi lebih kencang", "C. Memperbesar ukuran selang angin", "D. Supaya suara mesin lebih halus", "E. Mencegah tangki udara berkarat dari dalam dan berisiko keropos/bocor"], ans: 4 },
-            { q: "39. Bengkel kalian hanya memiliki sisa modal (Money) Rp 1.500.000. Kompresor utama bengkel rusak berat (tidak bisa memompa ban & alat impact), sementara tembok luar bengkel sudah sangat pudar butuh cat baru. Keputusan pengelolaan 5M yang paling rasional adalah...", options: ["A. Mengecat tembok karena itu wajah bengkel untuk menarik pelanggan baru", "B. Membagi uang setengah untuk cat, setengah untuk kompresor bekas", "C. Menggunakan seluruh uang memprioritaskan servis/beli kompresor baru, karena itu mesin utama penghasil perputaran jasa", "D. Menutup operasional bengkel sampai ada uang tambahan", "E. Membeli stok busi dan kampas rem saja"], ans: 2 },
-            { q: "40. Bengkel kalian memiliki mekanik lulusan terbaik (Man), hidrolik kelas dunia (Machine), kasir komputerisasi modern (Method), dan modal miliaran (Money). Namun pelanggan sering batal servis karena antrean lama dan ketika tiba gilirannya, suku cadang standar sering mendadak kosong. Jika dianalisis, kegagalan ini disebabkan oleh buruknya manajemen...", options: ["A. Method akibat tidak adanya jalur kasir cepat", "B. Money akibat harga suku cadang terlampau murah", "C. Machine akibat tidak rutin dibersihkan", "D. Material akibat tidak berfungsinya sistem kontrol stok suku cadang barang yang cepat laku (fast moving)", "E. Man akibat mekanik tidak ramah pada atasan"], ans: 3 }
-        ];
-
-        let currentQuestion = 0;
-        let userAnswers = new Array(questions.length).fill(null);
-        let cheatViolations = 0;
-        const MAX_VIOLATIONS = 3;
-        let isExamActive = false;
-        let canTrackBlur = false;
-
-        // Custom Modal System API (Pengganti dialog native browser)
-        function showCustomAlert(message, callback) {
-            const modal = document.getElementById('custom-modal');
-            document.getElementById('modal-title').innerText = "Pemberitahuan Sistem";
-            document.getElementById('modal-title').style.color = "var(--text)";
-            document.getElementById('modal-message').innerText = message;
-            
-            const btnContainer = document.getElementById('modal-buttons');
-            btnContainer.innerHTML = `<button class="btn" id="modal-ok-btn">Mengerti</button>`;
-            
-            modal.style.display = 'flex';
-            document.getElementById('modal-ok-btn').onclick = function() {
-                modal.style.display = 'none';
-                if (callback) callback();
-            };
-        }
-
-        function showCustomConfirm(message, onConfirm) {
-            const modal = document.getElementById('custom-modal');
-            document.getElementById('modal-title').innerText = "Konfirmasi Penyerahan";
-            document.getElementById('modal-title').style.color = "var(--primary)";
-            document.getElementById('modal-message').innerText = message;
-            
-            const btnContainer = document.getElementById('modal-buttons');
-            btnContainer.innerHTML = `
-                <button class="btn btn-danger" id="modal-cancel-btn">Batal</button>
-                <button class="btn" id="modal-confirm-btn">Ya, Selesai</button>
-            `;
-            
-            modal.style.display = 'flex';
-            document.getElementById('modal-cancel-btn').onclick = function() {
-                modal.style.display = 'none';
-            };
-            document.getElementById('modal-confirm-btn').onclick = function() {
-                modal.style.display = 'none';
-                onConfirm();
-            };
-        }
-
-        // Anti-Kecurangan Utama
-        document.addEventListener('contextmenu', event => event.preventDefault());
-        document.addEventListener('copy', event => event.preventDefault());
-        document.addEventListener('paste', event => event.preventDefault());
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
-                e.preventDefault();
-            }
-        });
-
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden && isExamActive) {
-                recordViolation("Membuka tab lain atau mengecilkan browser!");
-            }
-        });
-
-        window.addEventListener('blur', () => {
-            if (isExamActive && canTrackBlur) {
-                recordViolation("Fokus teralihkan! Jangan membuka aplikasi lain atau floating window.");
-            }
-        });
-
-        function recordViolation(msg) {
-            cheatViolations++;
-            document.getElementById('cheat-counter').innerText = `Pelanggaran: ${cheatViolations}/${MAX_VIOLATIONS}`;
-            
-            const banner = document.getElementById('warning-banner');
-            banner.innerText = `PERINGATAN ${cheatViolations}/${MAX_VIOLATIONS}: ${msg}`;
-            banner.style.display = 'block';
-            setTimeout(() => { if(banner) banner.style.display = 'none'; }, 4000);
-
-            if (cheatViolations >= MAX_VIOLATIONS) {
-                canTrackBlur = false;
-                showCustomAlert("Batas pelanggaran kecurangan terlampaui! Lembar kerja Anda akan dikunci dan dikumpulkan otomatis.", () => {
-                    submitExam("Dihentikan Paksa (Terindikasi Curang)");
-                });
-            }
-        }
-
-        // Alur Mulai Ujian
-        function startExam() {
-            const nameInput = document.getElementById('student-name').value.trim();
-            const classInput = document.getElementById('student-class').value.trim();
-            
-            if (!nameInput || !classInput) {
-                showCustomAlert("Identitas gagal divalidasi! Nama Lengkap dan Kelas wajib diisi terlebih dahulu.");
-                return;
-            }
-            
-            let elem = document.documentElement;
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen().then(() => {
-                    initExam();
-                }).catch(err => {
-                    initExam(); // Jalankan tanpa fullscreen jika ditolak kebijakan browser perangkat
-                });
-            } else {
-                initExam();
-            }
-        }
-
-        function initExam() {
-            isExamActive = true;
-            canTrackBlur = false;
-            
-            // Memberikan waktu transisi 1.5 detik agar browser stabil masuk fullscreen
-            setTimeout(() => {
-                canTrackBlur = true;
-            }, 1500);
-            
-            document.getElementById('start-screen').style.display = 'none';
-            document.getElementById('exam-screen').style.display = 'block';
-            renderQuestion();
-        }
-
-        function renderQuestion() {
-            const q = questions[currentQuestion];
-            document.getElementById('q-counter').innerText = `Soal ${currentQuestion + 1} dari ${questions.length}`;
-            document.getElementById('q-text').innerText = q.q;
-            
-            const optionsContainer = document.getElementById('options-container');
-            optionsContainer.innerHTML = '';
-            
-            q.options.forEach((opt, index) => {
-                const isChecked = userAnswers[currentQuestion] === index ? 'checked' : '';
-                optionsContainer.innerHTML += `
-                    <label class="option">
-                        <input type="radio" name="option" value="${index}" onchange="saveAnswer(${index})" ${isChecked}>
-                        ${opt}
-                    </label>
-                `;
-            });
-
-            document.getElementById('btn-prev').disabled = currentQuestion === 0;
-            
-            if (currentQuestion === questions.length - 1) {
-                document.getElementById('btn-next').style.display = 'none';
-                document.getElementById('btn-submit').style.display = 'inline-block';
-            } else {
-                document.getElementById('btn-next').style.display = 'inline-block';
-                document.getElementById('btn-submit').style.display = 'none';
-            }
-        }
-
-        function saveAnswer(index) {
-            userAnswers[currentQuestion] = index;
-        }
-
-        function navQuestion(step) {
-            currentQuestion += step;
-            renderQuestion();
-        }
-
-        function confirmSubmit() {
-            const unanswered = userAnswers.filter(ans => ans === null).length;
-            let msg = "Apakah Anda yakin ingin menyelesaikan dan mengumpulkan berkas ujian?";
-            if (unanswered > 0) {
-                msg = `Masih terdapat ${unanswered} soal yang belum Anda jawab. Tetap ingin mengumpulkan?`;
-            }
-            
-            showCustomConfirm(msg, () => {
-                submitExam("Selesai Normal");
-            });
-        }
-
-        function submitExam(status) {
-            isExamActive = false;
-            canTrackBlur = false;
-            
-            if (document.fullscreenElement) {
-                document.exitFullscreen().catch(() => {});
-            }
-
-            let correctCount = 0;
-            userAnswers.forEach((ans, index) => {
-                if (ans === questions[index].ans) {
-                    correctCount++;
-                }
-            });
-
-            const finalScore = Math.round((correctCount / questions.length) * 100);
-
-            // Memindahkan rekaman identitas ke halaman skor akhir
-            document.getElementById('res-student-name').innerText = document.getElementById('student-name').value;
-            document.getElementById('res-student-class').innerText = document.getElementById('student-class').value;
-
-            document.getElementById('exam-screen').style.display = 'none';
-            document.getElementById('result-screen').style.display = 'block';
-            
-            document.getElementById('final-score').innerText = finalScore;
-            document.getElementById('correct-answers').innerText = correctCount;
-            
-            const statusEl = document.getElementById('result-status');
-            statusEl.innerText = status;
-            if (status.includes("Curang")) {
-                statusEl.style.color = "var(--danger)";
-            } else {
-                statusEl.style.color = "#16a34a";
-            }
-        }
-    </script>
-</body>
-</html>
+            { q: "3. Tindakan menyortir alat kerja dan membuang alat-alat yang sudah rusak dari meja mekanik adalah bentuk penerapan budaya 5S pabrik pada tahap...", options: ["A. Seiri (Ringkas)", "B. Seiton (Rapi)", "C. Seiso (Resik
