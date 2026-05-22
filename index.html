@@ -15,7 +15,7 @@
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg); color: var(--text); margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
         header { background-color: var(--primary); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .warning-banner { background-color: var(--danger); color: white; text-align: center; padding: 0.5rem; font-weight: bold; display: none; }
+        .warning-banner { background-color: var(--danger); color: white; text-align: center; padding: 0.5rem; font-weight: bold; display: none; position: fixed; top: 0; left: 0; width: 100%; z-index: 999; }
         main { flex: 1; overflow-y: auto; padding: 2rem; display: flex; justify-content: center; }
         .card { background: var(--card); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); max-width: 800px; width: 100%; margin: auto; }
         .btn { background: var(--primary); color: white; border: none; padding: 10px 20px; font-size: 1rem; border-radius: 5px; cursor: pointer; transition: 0.3s; }
@@ -24,19 +24,24 @@
         .btn-danger { background: var(--danger); }
         .btn-danger:hover { background: #b91c1c; }
         
+        /* Form Inputs */
+        .form-group { margin-bottom: 1.2rem; text-align: left; }
+        .form-group label { display: block; margin-bottom: 0.4rem; font-weight: bold; font-size: 0.95rem; }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; transition: 0.2s; }
+        .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
+
         /* Soal Styles */
         .question-container { display: none; }
         .question-text { font-size: 1.1rem; margin-bottom: 1rem; font-weight: 500; line-height: 1.5; }
-        .option { display: block; margin-bottom: 0.8rem; padding: 10px; border: 1px solid #d1d5db; border-radius: 5px; cursor: pointer; transition: 0.2s; }
+        .option { display: block; margin-bottom: 0.8rem; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; cursor: pointer; transition: 0.2s; }
         .option:hover { background: #eff6ff; border-color: #bfdbfe; }
-        .option input { margin-right: 10px; }
+        .option input { margin-right: 12px; transform: scale(1.1); }
         
         .navigation { display: flex; justify-content: space-between; margin-top: 2rem; border-top: 1px solid #e5e7eb; padding-top: 1rem; }
         .info-panel { display: flex; justify-content: space-between; margin-bottom: 1rem; font-weight: bold; border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem;}
         
         #start-screen, #result-screen { text-align: center; }
         .score-display { font-size: 4rem; color: var(--primary); font-weight: bold; margin: 1rem 0; }
-        .cheat-warning { color: var(--danger); font-size: 0.9rem; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -45,24 +50,36 @@
 
     <header>
         <div><strong>CBT Profesional</strong> | Simulasi PAT PKK</div>
-        <div id="timer-display">Waktu: --:--</div>
+        <div id="timer-display">Status: Mengawasi Ujian</div>
     </header>
 
     <main>
         <div class="card" id="start-screen">
             <h2>Ujian Praktik & Teori Kejuruan</h2>
-            <p><strong>Mata Pelajaran:</strong> Produk Kreatif dan Kewirausahaan (PKK)<br>
-            <strong>Jumlah Soal:</strong> 40 Pilihan Ganda</p>
-            <div style="text-align: left; background: #fee2e2; padding: 15px; border-radius: 5px; margin: 20px 0;">
-                <h4 style="margin-top:0; color: var(--danger);">⚠ PERATURAN UJIAN TATA TERTIB KETAT:</h4>
-                <ul style="color: var(--danger); font-size: 0.9rem;">
-                    <li>Ujian wajib menggunakan mode Layar Penuh (Fullscreen).</li>
-                    <li>Sistem mendeteksi jika Anda membuka tab baru, mengecilkan layar, atau membuka aplikasi mengambang (floating apps/split screen).</li>
-                    <li>Maksimal pelanggaran adalah 3 kali. Lebih dari itu, ujian otomatis diselesaikan paksa dengan nilai yang ada.</li>
-                    <li>Dilarang klik kanan, copy-paste, atau membuka inspect element.</li>
+            <p style="color: #6b7280; margin-bottom: 1.5rem;">Mata Pelajaran: Produk Kreatif dan Kewirausahaan (PKK)</p>
+            
+            <div style="background: #f9fafb; padding: 1.5rem; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 1.5rem;">
+                <h4 style="margin-top: 0; text-align: left; color: var(--text);">Isi Identitas Peserta:</h4>
+                <div class="form-group">
+                    <label for="student-name">Nama Lengkap</label>
+                    <input type="text" id="student-name" class="form-control" placeholder="Masukkan nama lengkap siswa..." autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="student-class">Kelas</label>
+                    <input type="text" id="student-class" class="form-control" placeholder="Contoh: XI TBSM 1, XII TKRO 2..." autocomplete="off">
+                </div>
+            </div>
+
+            <div style="text-align: left; background: #fee2e2; padding: 15px; border-radius: 6px; margin: 20px 0;">
+                <h4 style="margin-top:0; color: var(--danger);">⚠ TATA TERTIB SISTEM ANTI-KECURANGAN:</h4>
+                <ul style="color: var(--danger); font-size: 0.9rem; padding-left: 20px; margin: 0;">
+                    <li>Ujian wajib berjalan dalam mode Layar Penuh (Fullscreen).</li>
+                    <li>Sistem mendeteksi jika membuka tab baru, mengecilkan browser, atau membuka aplikasi eksternal (floating apps).</li>
+                    <li>Batas toleransi ketidaksengajaan adalah 3 kali pelanggaran. Jika dilewati, ujian otomatis selesai paksa.</li>
+                    <li>Fitur klik kanan, salin soal (copy-paste), dan inspect element telah dinonaktifkan.</li>
                 </ul>
             </div>
-            <button class="btn" onclick="startExam()">Mulai Ujian Sekarang</button>
+            <button class="btn" onclick="startExam()">Masuk Mode Ujian</button>
         </div>
 
         <div class="card question-container" id="exam-screen">
@@ -70,9 +87,8 @@
                 <span id="q-counter">Soal 1 dari 40</span>
                 <span id="cheat-counter" style="color: var(--danger);">Pelanggaran: 0/3</span>
             </div>
-            <div class="question-text" id="q-text">Mata uang negara Indonesia adalah...</div>
-            <div id="options-container">
-                </div>
+            <div class="question-text" id="q-text">Loading Soal...</div>
+            <div id="options-container"></div>
             <div class="navigation">
                 <button class="btn" id="btn-prev" onclick="navQuestion(-1)">Sebelumnya</button>
                 <button class="btn" id="btn-next" onclick="navQuestion(1)">Selanjutnya</button>
@@ -81,17 +97,29 @@
         </div>
 
         <div class="card" id="result-screen" style="display: none;">
-            <h2>Ujian Selesai!</h2>
-            <p>Terima kasih telah mengikuti ujian ini. Berikut adalah hasil Anda:</p>
+            <h2>Hasil Evaluasi Ujian</h2>
+            <div style="text-align: left; background: #f3f4f6; padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0; font-size: 1rem; line-height: 1.6;">
+                <strong>Nama Peserta:</strong> <span id="res-student-name" style="color: var(--primary); font-weight: bold;">-</span><br>
+                <strong>Kelas:</strong> <span id="res-student-class" style="font-weight: bold;">-</span><br>
+                <strong>Status Penyelesaian:</strong> <span id="result-status" style="font-weight: bold;">Selesai Normal</span>
+            </div>
+            <p>Skor Nilai Akhir Anda:</p>
             <div class="score-display" id="final-score">0</div>
-            <p id="result-status">Selesai Normal</p>
-            <p>Jawaban Benar: <span id="correct-answers">0</span> / 40</p>
+            <p style="font-weight: 500;">Benar: <span id="correct-answers" style="color: #16a34a;">0</span> dari 40 soal</p>
             <button class="btn" onclick="location.reload()" style="margin-top: 20px;">Kembali ke Beranda</button>
         </div>
     </main>
 
+    <div id="custom-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 2rem; border-radius: 8px; max-width: 450px; width: 90%; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.25);">
+            <h3 id="modal-title" style="margin-top: 0;">Pemberitahuan</h3>
+            <p id="modal-message" style="margin-bottom: 1.5rem; color: #4b5563; line-height: 1.5; font-size: 0.95rem;"></p>
+            <div id="modal-buttons" style="display: flex; justify-content: center; gap: 12px;"></div>
+        </div>
+    </div>
+
     <script>
-        // Data Soal Lengkap dari PDF
+        // Database Soal Sesuai Berkas Ujian PAT PKK
         const questions = [
             { q: "1. Pada dunia industri, untuk menjamin kualitas layanan yang selalu sama dan terstandar, mekanik diwajibkan bekerja mengikuti panduan tertulis yang disebut...", options: ["A. Jurnal perakitan", "B. Standard Operating Procedure (SOP)", "C. Kartu garansi servis", "D. Daftar absensi", "E. Nota tagihan"], ans: 1 },
             { q: "2. Waktu tunggu yang dirasakan oleh pelanggan sejak motor didaftarkan hingga selesai dikerjakan di bengkel disebut dengan istilah...", options: ["A. Takt Time", "B. Overtime", "C. Lead Time", "D. Downtime", "E. Rest Time"], ans: 2 },
@@ -128,7 +156,7 @@
             { q: "33. Barang cair seperti brake fluid (minyak rem), part cleaner, pelumas rantai, serta kain majun merupakan elemen dari sumber daya...", options: ["A. Money", "B. Material", "C. Method", "D. Man", "E. Machine"], ans: 1 },
             { q: "34. Dokumen panduan mengenai urutan penyetelan injeksi dan durasi standar pengerjaannya adalah elemen dari sumber daya...", options: ["A. Money", "B. Material", "C. Machine", "D. Man", "E. Method"], ans: 4 },
             { q: "35. Hubungan kolaborasi yang efisien antara elemen SDM (Man) dan Persediaan (Material) di bengkel dapat terlihat ketika...", options: ["A. Mekanik memakai cairan pembersih sebanyak-banyaknya agar terlihat bersih", "B. Mekanik diam-diam membuang oli pelumas yang masih bagus", "C. Mekanik menggunakan bahan habis pakai (seperti grease atau cairan cleaner) sesuai takaran standar tanpa pemborosan", "D. Mekanik menyuruh konsumen membeli barang di bengkel luar", "E. Kasir menahan stok barang masuk di gudang"], ans: 2 },
-            { q: "36. Validasi dan pencatatan buku kasir (Money) wajib dilakukan dan dicocokkan dengan fisik barang terjual setiap sore saat tutup bengkel. Hal ini bertujuan untuk...", options: ["A. Mengisi waktu luang kasir", "B. Mencegah kebocoran anggaran dan mengetahui perputaran untung rugi harian bengkel", "C. Mengurangi gaji mekanik secara otomatis", "D. Menaikkan harga jual esok hari", "E. Memancing investor luar negeri masuk"], ans: 1 },
+            { q: "36. Validasi dan pencatatan buku kasir (Money) wajib dilakukan dan dicocokkan dengan fisik barang terjual setiap sore saat tutup bengkel. Hal ini bertujuan untuk...", options: ["A. Mengisi waktu luang kasir", "B. Mencegah kebocoran anggaran dan mengetahui perputaran untung rugi harian bengkel", "C. Mengurangi gaji mekanik secara otomatis", "D. Penaikkan harga jual esok hari", "E. Memancing investor luar negeri masuk"], ans: 1 },
             { q: "37. Sebuah bengkel memiliki SOP (Method) yang sangat baik, namun karyawan (Man) sering mengabaikannya karena kurang pengawasan. Dampak logis yang timbul pada bisnis jasa adalah...", options: ["A. Kecepatan pelayanan selalu meningkat tajam", "B. Penggunaan alat menjadi lebih awet", "C. Biaya listrik mengalami penurunan drastis", "D. Kualitas hasil servis tidak konsisten dan sangat bergantung pada mood karyawan hari itu", "E. Pelanggan merasa lebih dilayani secara personal"], ans: 3 },
             { q: "38. Mesin Compressor angin (Machine) harus dibuka katup pembuangan air di dasar tangkinya minimal seminggu sekali. Perawatan sumber daya alat ini ditujukan untuk...", options: ["A. Meringankan beban putaran mesin", "B. Menambah tekanan udara dari mesin menjadi lebih kencang", "C. Memperbesar ukuran selang angin", "D. Supaya suara mesin lebih halus", "E. Mencegah tangki udara berkarat dari dalam dan berisiko keropos/bocor"], ans: 4 },
             { q: "39. Bengkel kalian hanya memiliki sisa modal (Money) Rp 1.500.000. Kompresor utama bengkel rusak berat (tidak bisa memompa ban & alat impact), sementara tembok luar bengkel sudah sangat pudar butuh cat baru. Keputusan pengelolaan 5M yang paling rasional adalah...", options: ["A. Mengecat tembok karena itu wajah bengkel untuk menarik pelanggan baru", "B. Membagi uang setengah untuk cat, setengah untuk kompresor bekas", "C. Menggunakan seluruh uang memprioritaskan servis/beli kompresor baru, karena itu mesin utama penghasil perputaran jasa", "D. Menutup operasional bengkel sampai ada uang tambahan", "E. Membeli stok busi dan kampas rem saja"], ans: 2 },
@@ -140,8 +168,48 @@
         let cheatViolations = 0;
         const MAX_VIOLATIONS = 3;
         let isExamActive = false;
+        let canTrackBlur = false;
 
-        // Anti-Cheat: Mencegah Klik Kanan, Copy, Paste, & Tombol F12
+        // Custom Modal System API (Pengganti dialog native browser)
+        function showCustomAlert(message, callback) {
+            const modal = document.getElementById('custom-modal');
+            document.getElementById('modal-title').innerText = "Pemberitahuan Sistem";
+            document.getElementById('modal-title').style.color = "var(--text)";
+            document.getElementById('modal-message').innerText = message;
+            
+            const btnContainer = document.getElementById('modal-buttons');
+            btnContainer.innerHTML = `<button class="btn" id="modal-ok-btn">Mengerti</button>`;
+            
+            modal.style.display = 'flex';
+            document.getElementById('modal-ok-btn').onclick = function() {
+                modal.style.display = 'none';
+                if (callback) callback();
+            };
+        }
+
+        function showCustomConfirm(message, onConfirm) {
+            const modal = document.getElementById('custom-modal');
+            document.getElementById('modal-title').innerText = "Konfirmasi Penyerahan";
+            document.getElementById('modal-title').style.color = "var(--primary)";
+            document.getElementById('modal-message').innerText = message;
+            
+            const btnContainer = document.getElementById('modal-buttons');
+            btnContainer.innerHTML = `
+                <button class="btn btn-danger" id="modal-cancel-btn">Batal</button>
+                <button class="btn" id="modal-confirm-btn">Ya, Selesai</button>
+            `;
+            
+            modal.style.display = 'flex';
+            document.getElementById('modal-cancel-btn').onclick = function() {
+                modal.style.display = 'none';
+            };
+            document.getElementById('modal-confirm-btn').onclick = function() {
+                modal.style.display = 'none';
+                onConfirm();
+            };
+        }
+
+        // Anti-Kecurangan Utama
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.addEventListener('copy', event => event.preventDefault());
         document.addEventListener('paste', event => event.preventDefault());
@@ -151,55 +219,66 @@
             }
         });
 
-        // Anti-Cheat: Deteksi Kehilangan Fokus (Ganti Tab / Floating App / Minimize)
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-        window.addEventListener('blur', handleBlur);
-
-        function handleVisibilityChange() {
+        document.addEventListener('visibilitychange', () => {
             if (document.hidden && isExamActive) {
-                recordViolation("Terdeteksi berpindah tab atau mengecilkan layar!");
+                recordViolation("Membuka tab lain atau mengecilkan browser!");
             }
-        }
+        });
 
-        function handleBlur() {
-            if (isExamActive) {
-                // Deteksi jika window kehilangan fokus (misal ditarik notifikasi WA / Floating app)
-                recordViolation("Fokus layar hilang. Terdeteksi membuka panel atau aplikasi lain!");
+        window.addEventListener('blur', () => {
+            if (isExamActive && canTrackBlur) {
+                recordViolation("Fokus teralihkan! Jangan membuka aplikasi lain atau floating window.");
             }
-        }
+        });
 
         function recordViolation(msg) {
             cheatViolations++;
-            const banner = document.getElementById('warning-banner');
             document.getElementById('cheat-counter').innerText = `Pelanggaran: ${cheatViolations}/${MAX_VIOLATIONS}`;
             
+            const banner = document.getElementById('warning-banner');
             banner.innerText = `PERINGATAN ${cheatViolations}/${MAX_VIOLATIONS}: ${msg}`;
             banner.style.display = 'block';
-            setTimeout(() => banner.style.display = 'none', 4000);
+            setTimeout(() => { if(banner) banner.style.display = 'none'; }, 4000);
 
             if (cheatViolations >= MAX_VIOLATIONS) {
-                alert("PELANGGARAN MAKSIMAL TERCAPAI! Ujian dihentikan paksa.");
-                submitExam("Dihentikan Paksa (Curang)");
+                canTrackBlur = false;
+                showCustomAlert("Batas pelanggaran kecurangan terlampaui! Lembar kerja Anda akan dikunci dan dikumpulkan otomatis.", () => {
+                    submitExam("Dihentikan Paksa (Terindikasi Curang)");
+                });
             }
         }
 
-        // Memulai Ujian & Meminta Fullscreen
+        // Alur Mulai Ujian
         function startExam() {
+            const nameInput = document.getElementById('student-name').value.trim();
+            const classInput = document.getElementById('student-class').value.trim();
+            
+            if (!nameInput || !classInput) {
+                showCustomAlert("Identitas gagal divalidasi! Nama Lengkap dan Kelas wajib diisi terlebih dahulu.");
+                return;
+            }
+            
             let elem = document.documentElement;
             if (elem.requestFullscreen) {
                 elem.requestFullscreen().then(() => {
                     initExam();
                 }).catch(err => {
-                    alert(`Gagal memulai layar penuh: ${err.message}. Wajib layar penuh untuk mulai.`);
+                    initExam(); // Jalankan tanpa fullscreen jika ditolak kebijakan browser perangkat
                 });
             } else {
-                // Fallback untuk browser lama
                 initExam();
             }
         }
 
         function initExam() {
             isExamActive = true;
+            canTrackBlur = false;
+            
+            // Memberikan waktu transisi 1.5 detik agar browser stabil masuk fullscreen
+            setTimeout(() => {
+                canTrackBlur = true;
+            }, 1500);
+            
             document.getElementById('start-screen').style.display = 'none';
             document.getElementById('exam-screen').style.display = 'block';
             renderQuestion();
@@ -223,7 +302,6 @@
                 `;
             });
 
-            // Atur visibilitas tombol
             document.getElementById('btn-prev').disabled = currentQuestion === 0;
             
             if (currentQuestion === questions.length - 1) {
@@ -246,23 +324,24 @@
 
         function confirmSubmit() {
             const unanswered = userAnswers.filter(ans => ans === null).length;
+            let msg = "Apakah Anda yakin ingin menyelesaikan dan mengumpulkan berkas ujian?";
             if (unanswered > 0) {
-                if(!confirm(`Ada ${unanswered} soal yang belum dijawab. Yakin ingin mengumpulkan?`)) return;
-            } else {
-                if(!confirm("Anda yakin ingin menyelesaikan ujian ini?")) return;
+                msg = `Masih terdapat ${unanswered} soal yang belum Anda jawab. Tetap ingin mengumpulkan?`;
             }
-            submitExam("Selesai Normal");
+            
+            showCustomConfirm(msg, () => {
+                submitExam("Selesai Normal");
+            });
         }
 
         function submitExam(status) {
             isExamActive = false;
+            canTrackBlur = false;
             
-            // Keluar dari fullscreen jika masih aktif
             if (document.fullscreenElement) {
-                document.exitFullscreen();
+                document.exitFullscreen().catch(() => {});
             }
 
-            // Hitung Nilai
             let correctCount = 0;
             userAnswers.forEach((ans, index) => {
                 if (ans === questions[index].ans) {
@@ -272,7 +351,10 @@
 
             const finalScore = Math.round((correctCount / questions.length) * 100);
 
-            // Tampilkan Hasil
+            // Memindahkan rekaman identitas ke halaman skor akhir
+            document.getElementById('res-student-name').innerText = document.getElementById('student-name').value;
+            document.getElementById('res-student-class').innerText = document.getElementById('student-class').value;
+
             document.getElementById('exam-screen').style.display = 'none';
             document.getElementById('result-screen').style.display = 'block';
             
@@ -283,7 +365,8 @@
             statusEl.innerText = status;
             if (status.includes("Curang")) {
                 statusEl.style.color = "var(--danger)";
-                statusEl.style.fontWeight = "bold";
+            } else {
+                statusEl.style.color = "#16a34a";
             }
         }
     </script>
